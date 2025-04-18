@@ -7,4 +7,5 @@ import tech.buildrun.springsecurity.entities.Tweet;
 
 @Repository
 public interface RoleRepository extends JpaRepository<Role, Long> {
+    Role findByName(String name);
 }
