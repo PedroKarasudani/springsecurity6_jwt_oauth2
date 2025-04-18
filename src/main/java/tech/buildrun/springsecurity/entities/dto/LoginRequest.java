@@ -1,4 +1,4 @@
-package tech.buildrun.springsecurity.controller.dto;
+package tech.buildrun.springsecurity.entities.dto;
 
 public record LoginRequest(String username, String password) {
 }

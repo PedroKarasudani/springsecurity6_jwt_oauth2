@@ -6,7 +6,7 @@ import org.springframework.security.oauth2.jwt.JwtClaimsSet;
 import org.springframework.security.oauth2.jwt.JwtEncoder;
 import org.springframework.security.oauth2.jwt.JwtEncoderParameters;
 import org.springframework.stereotype.Service;
-import tech.buildrun.springsecurity.controller.dto.LoginRequest;
+import tech.buildrun.springsecurity.entities.dto.LoginRequest;
 import tech.buildrun.springsecurity.entities.User;
 import tech.buildrun.springsecurity.repository.UserRepository;
 

@@ -5,8 +5,8 @@ import org.springframework.security.oauth2.jwt.JwtEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-import tech.buildrun.springsecurity.controller.dto.LoginRequest;
-import tech.buildrun.springsecurity.controller.dto.LoginResponse;
+import tech.buildrun.springsecurity.entities.dto.LoginRequest;
+import tech.buildrun.springsecurity.entities.dto.LoginResponse;
 import tech.buildrun.springsecurity.service.TokenService;
 
 @RestController
