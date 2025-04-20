@@ -11,6 +11,7 @@ import tech.buildrun.springsecurity.entities.dto.CreateUserDto;
 import tech.buildrun.springsecurity.repository.RoleRepository;
 import tech.buildrun.springsecurity.repository.UserRepository;
 
+import java.util.List;
 import java.util.Set;
 
 @Service
@@ -41,5 +42,9 @@ public class UserService {
         user.setPassword(bCryptPasswordEncoder.encode(userDto.password()));
         user.setRoles(Set.of(basicRole));
         userRepository.save(user);
+    }
+
+    public List<User> findAll () {
+        return this.userRepository.findAll();
     }
 }

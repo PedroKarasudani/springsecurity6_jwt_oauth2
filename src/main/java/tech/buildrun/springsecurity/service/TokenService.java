@@ -6,12 +6,14 @@ import org.springframework.security.oauth2.jwt.JwtClaimsSet;
 import org.springframework.security.oauth2.jwt.JwtEncoder;
 import org.springframework.security.oauth2.jwt.JwtEncoderParameters;
 import org.springframework.stereotype.Service;
+import tech.buildrun.springsecurity.entities.Role;
 import tech.buildrun.springsecurity.entities.dto.LoginRequest;
 import tech.buildrun.springsecurity.entities.User;
 import tech.buildrun.springsecurity.repository.UserRepository;
 
 import java.time.Instant;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class TokenService {
@@ -29,11 +31,17 @@ public class TokenService {
     }
 
     public String generatedTokenJwt(LoginRequest loginRequest) {
+        var scopes = this.validLogin(loginRequest).get().getRoles()
+                .stream()
+                .map(Role::getName)
+                .collect(Collectors.joining(" "));
+
         var claims = JwtClaimsSet.builder()
                 .issuer("mybackend")
                 .subject(this.validLogin(loginRequest).get().getUserId().toString())
                 .issuedAt(Instant.now())
                 .expiresAt(Instant.now().plusSeconds(expiresIn))
+                .claim("scope", scopes)
                 .build();
 
         return jwtEncoder.encode(JwtEncoderParameters.from(claims)).getTokenValue();
