@@ -1,5 +1,8 @@
 package tech.buildrun.springsecurity.service;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.stereotype.Service;
@@ -8,10 +11,11 @@ import tech.buildrun.springsecurity.entities.Role;
 import tech.buildrun.springsecurity.entities.Tweet;
 import tech.buildrun.springsecurity.entities.User;
 import tech.buildrun.springsecurity.entities.dto.CreateTweetDto;
+import tech.buildrun.springsecurity.entities.dto.FeedItemDto;
 import tech.buildrun.springsecurity.repository.TweetRepository;
 import tech.buildrun.springsecurity.repository.UserRepository;
 
-import java.math.BigInteger;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -50,5 +54,11 @@ public class TweetService {
         } else {
             throw new ResponseStatusException((HttpStatus.FORBIDDEN));
         }
+    }
+
+
+    public Page<FeedItemDto> pages(int page, int pageSize) {
+        return this.tweetRepository.findAll(PageRequest.of(page, pageSize, Sort.Direction.DESC, "creationTimestamp"))
+                .map(tweet -> new FeedItemDto(tweet.getTweetId(), tweet.getContent(), tweet.getUser().getUsername()));
     }
 }

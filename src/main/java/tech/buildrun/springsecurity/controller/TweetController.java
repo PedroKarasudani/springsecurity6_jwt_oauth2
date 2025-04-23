@@ -4,10 +4,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.web.bind.annotation.*;
 import tech.buildrun.springsecurity.entities.dto.CreateTweetDto;
+import tech.buildrun.springsecurity.entities.dto.FeedDto;
 import tech.buildrun.springsecurity.service.TweetService;
-
-import java.math.BigInteger;
-import java.util.UUID;
 
 @RestController
 public class TweetController {
@@ -29,4 +27,12 @@ public class TweetController {
         this.tweetService.deleteTweetById(id, token);
         return ResponseEntity.ok().build();
     }
+
+    @GetMapping("/feed")
+    public ResponseEntity<FeedDto> feed(@RequestParam(value = "page", defaultValue = "0") int page,
+                                        @RequestParam(value = "pageSize", defaultValue = "10") int pageSize){
+        var tweets = this.tweetService.pages(page, pageSize);
+        return ResponseEntity.ok(new FeedDto(tweets.getContent(), page, pageSize, tweets.getTotalPages(), tweets.getTotalElements()));
+    }
+
 }
